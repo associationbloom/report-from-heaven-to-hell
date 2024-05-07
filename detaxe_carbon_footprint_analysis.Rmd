@@ -801,15 +801,15 @@ catch_maldives <- data_iotc_maldives %>%
 
 For European tropical tuna purse seine fishery :
 
-* Mean landings = `r catch_eu` tons of tuna
+* Mean landings = `r format(round(catch_eu,0), big.mark = ",")` tons of tuna
 
-* Amount of subsidies per landed ton of tuna = `r (data_stecf %>% ungroup () %>% with_groups(year, summarise, fuel_tax_concessions = sum(fuel_tax_concessions)) %>% summarise (fuel_tax_concessions = mean(fuel_tax_concessions)) %>% pull (fuel_tax_concessions)*10^6 + (94388029/27))/catch_eu`
+* Amount of subsidies per landed ton of tuna (over the 2019-2021) = `r (data_stecf %>% ungroup () %>% filter(year %in% c(2019:2021)) %>% with_groups(year, summarise, fuel_tax_concessions = sum(fuel_tax_concessions)) %>% summarise (fuel_tax_concessions = mean(fuel_tax_concessions)) %>% pull (fuel_tax_concessions)*10^6 + (396462/3) + (35787928/3))/catch_eu`
 
-NB: We sum mean annual subsidies perceived indirectly via fuel tax concessions and directly via the European structural funds. For subsidies perceived via European fund, we divided the total amount of subsidies perceived by the EU tuna fleet over the 1994-2020 period (i.e., 94,388,029 ; see the .Rmd file entitled "subsidies_perceived_by_seiners_under_european_funds") by 27 (i.e., the number of years covered by the four funds). 
+NB : Over the 2019-2021 period, 396,462 euros were perceived by european tuna seiners under the EMFAF (European Maritime, Fisheries and Aquaculture Fund) and 35,787,928 euros under fishing agreements. 
+The amounts of subsidies granted to European tuna vessels under fishing agreements have been estimated by cross-referencing the data on authorizations granted by the European Union to the various vessels with the amounts associated with the tuna agreements. The allocation was made in proportion to the
+tonnage of vessels operating in African waters. 
 
 * Number of jobs created per landed ton of tuna = `r data_stecf %>% rowwise () %>% mutate(fte_landings = fte_national/landings_total) %>% select(country, year, fte_landings) %>% ungroup () %>% summarise (fte_landings = mean(fte_landings)) %>% pull (fte_landings)`
-
-* Number of DCP used per landed ton of tuna = `r 6700/catch_eu`
 
 * Estimated number of juveniles in catches of the three tuna species in the Indian ocean :
 
@@ -819,13 +819,11 @@ NB = This figure was calculated by weighting the percentage of juveniles of each
 
 For Maldivian tropical tuna pole and line fishery :
 
-* Mean landings = `r catch_maldives` tons of tuna
+* Mean landings = `r format(round(catch_maldives,0), big.mark = ",")` tons of tuna
 
-* Amount of subsidies per landed ton of tuna = `r mean(c(5500000,6000000))/catch_maldives`
+* Amount of subsidies per landed ton of tuna = `r (169006/3)/catch_maldives`
 
-NB: According to what we found, subsidies dedicated to fisheries (hence mostly dedicated to tuna fisheries) in Maldives varies annually between 5.5 and 6 millions euros.  
-
-* Number of DCP used per landed ton of tuna = `r 50/catch_maldives`
+NB: According to [this local press article] (https://mbr.mv/16120), Maldivian fishermen received 2,814,546 million Maldivian rupees between 2019 and 2021 in the form of fuel subsidies, equivalent to around 169,000 euros. 
 
 * Estimated number of juveniles in catches of the three tuna species in the Indian ocean :
 
